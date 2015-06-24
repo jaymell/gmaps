@@ -1,2 +1,9 @@
-html, body, #map-canvas { height: 100%; margin: 0; padding: 0;}
-
+html, body { height: 100%; margin: 0; padding: 0;}
+#map-canvas { margin-left: 20px; margin-top: 20px;}
+.rcorners {
+	border-radius: 25px;
+	border: 2px solid;
+	padding: 20px;
+	width: 800px;
+	height: 300px;
+}
