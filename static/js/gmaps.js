@@ -18,7 +18,7 @@ function initialize() {
 	};
 	var map = new google.maps.Map(document.getElementById('map-canvas'),
 	    mapOptions);
-
+	/*
 	// put marker on center of map:
 	var marker = new google.maps.Marker({
 		position: map.getCenter(),
@@ -30,6 +30,7 @@ function initialize() {
 		map.setZoom(8);
 		map.setCenter(marker.getPosition());
 	});
+	*/
 
 	var xhReq = new XMLHttpRequest();
 	var url = '/json';
