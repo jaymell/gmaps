@@ -46,32 +46,25 @@ def dig(site):
 	
 def get_locale(ip):
 	""" Using whois --- currently leaving out street address and zip
-		code in attempt to improve overall accuracy """
-	#whois 63.96.4.58 | egrep '(^Address|^City|^StateProv|^PostalCode|^Country)'
+		code in attempt to improve overall accuracy , basically this from 
+		command line: """ #whois 63.96.4.58 | egrep '(^City|^StateProv|^Country)'
 	def get_match(element, line):
 		match = re.match('^%s:\s+(.*)' % element, line, re.IGNORECASE)
 		return match.group(1) if match else None
 	cmd='whois %s' % ip
 	proc=subprocess.Popen(shlex.split(cmd),stdout=subprocess.PIPE)
 	out,err=proc.communicate()
-	#address = ''
 	city = ''
 	state = ''
-	#postal = ''
 	country = ''
 	line = out
 	for line in out.split('\n'):	
-		#match = get_match('Address', line)
-		#if match: address = match
 		match = get_match('City', line)
 		if match: city = match
 		match = get_match('StateProv', line)
 		if match: state = match
-		#match = get_match('PostalCode', line)
-		#if match: postal = match
 		match = get_match('Country', line)
 		if match: country = match
-		#return_address = ' '.join((address, city, state, postal, country))
 		return_address = ' '.join((city, state, country))
 	return return_address
 
