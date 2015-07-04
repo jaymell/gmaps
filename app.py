@@ -16,7 +16,7 @@ collection = connection[DB_NAME][COLLECTION_NAME]
 
 @app.route("/")
 def index():
-	return render_template("gmaps.html")
+	return render_template("index.html")
 
 @app.route("/json")
 def get_json():
@@ -25,4 +25,4 @@ def get_json():
 	return sites
 	
 if __name__ == "__main__":
-	app.run(host='localhost',port=5000,debug=True)
+	app.run(host='0.0.0.0',port=5000,debug=True)
