@@ -26,3 +26,18 @@ def get_json():
 	
 if __name__ == "__main__":
 	app.run(host='0.0.0.0',port=5000,debug=True)
+
+
+""" get raw address data from sites json:
+from app import *
+import json
+a = json.loads(get_json())
+for site_dict in a:
+        for site, data in site_dict.items():
+                for ip, ip_data in data.items():
+                        try:
+                                print ip_data['address'].split()[-1]
+                        except:
+                                pass
+
+"""
