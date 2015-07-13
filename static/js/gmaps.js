@@ -38,15 +38,13 @@ var Map = {
 		var json = JSON.parse(xhReq.responseText);
 		console.log(json);
 		for( i = 0; i < json.length; i++ ) {
-			for ( site in json[i] ) {
-				console.log('site: ',site);
-				for ( ip in json[i][site] ) {
-					console.log('ip: ',ip);
-					var latitude = json[i][site][ip]['latitude'];
-					var longitude = json[i][site][ip]['longitude'];
-					if ( latitude && longitude ) {
-						Map.addMarker(latitude, longitude, site); 	
-					}
+			var site = json[i]['url'];
+			for ( ip in json[i]['ips'] ) {
+				console.log('ip: ',ip);
+				var latitude = json[i]['ips'][ip]['latitude'];
+				var longitude = json[i]['ips'][ip]['longitude'];
+				if ( latitude && longitude ) {
+					Map.addMarker(latitude, longitude, site); 	
 				}
 			}
 		}
