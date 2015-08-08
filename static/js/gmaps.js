@@ -48,6 +48,14 @@ var Map = {
 				}
 			}
 		}
+	},
+	slowAdd: function() {
+		var i = 0, j = 0;
+		function delay(i,j) {
+			(i<=20 && j<=20) ? Map.addMarker(i,j) : false;
+			setTimeout(function() { delay(i+1, j+1); }, 500);	
+		}
+		delay(i, j);
 	}
 };
 				
