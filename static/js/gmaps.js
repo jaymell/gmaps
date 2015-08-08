@@ -13,12 +13,28 @@ function detectBrowser() {
 
 var Map = {
 	build: function() {
-		var locale = new google.maps.LatLng(33,-97);
+		var locale = new google.maps.LatLng(30,0);
 		var mapOptions = {
 			center: locale,
 			zoom: 2,
 		};
 		Map.map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
+		// the following removes the annoying equator and date lines:
+		var mapStyle = [
+		      {
+			 featureType: "administrative",
+			 elementType: "geometry.fill",
+			 stylers: [
+			    { visibility: "off" }
+			 ]
+		       }
+		];
+		var styledMap = new google.maps.StyledMapType(mapStyle);
+		Map.map.mapTypes.set('myCustomMap', styledMap);
+		Map.map.setMapTypeId('myCustomMap');
+		// end part that removes equator and date lines here 
+
 		Map.addTopSites()
 		
 	},
