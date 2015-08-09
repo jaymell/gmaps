@@ -44,10 +44,19 @@ var Map = {
 		Map.slowAdd(json);
 		
 	},
+	incrIpTotal: (function() {
+		var total = 0;
+		var item = document.getElementById('ipTotalText');
+		return function increment() {
+			total++;
+			item.innerHTML = "Total IPs Plotted: " + total;
+		}
+	})(),	
 	addMarker: function(lat, lon, title) {
 		var marker = new google.maps.Marker({
 			position: new google.maps.LatLng(lat, lon),
 			title: title,
+			
 		});
 		marker.setMap(Map.map);
 	},
@@ -77,9 +86,14 @@ var Map = {
 		function delay(siteList) {
 			if ( siteList.length > 0 ) {	
 				console.log(siteList[0]);
-				Map.addMarker(siteList[0]['latitude'],
-						siteList[0]['longitude'],
-						siteList[0]['url']);
+				// random jitter, plusOrMinus to get sign:
+				var plusOrMinus = function() { return Math.random() < 0.5 ? -1 : 1 };
+				if ( siteList[0]['latitude'] != undefined && siteList[0]['longitude'] != undefined) {
+					Map.addMarker(siteList[0]['latitude']+Math.random()*2*plusOrMinus(),
+							siteList[0]['longitude']+Math.random()*2*plusOrMinus(),
+							siteList[0]['url']);
+					Map.incrIpTotal();
+				}
 				setTimeout(function() { delay(siteList.slice(1)); }, 100);
 			}
 		};
