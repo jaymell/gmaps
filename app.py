@@ -11,9 +11,7 @@ app = Flask(__name__)
 MONGODB_HOST = 'localhost'
 MONGODB_PORT = 27017
 DB_NAME = 'top_sites'
-COLLECTION_NAME = 'gmaps'
 connection = MongoClient(MONGODB_HOST, MONGODB_PORT)
-collection = connection[DB_NAME][COLLECTION_NAME]
 
 @app.route("/")
 def index():
@@ -21,9 +19,19 @@ def index():
 
 @app.route("/json")
 def get_json():
+	COLLECTION_NAME = 'gmaps'
+	collection = connection[DB_NAME][COLLECTION_NAME]
 	sites = [ i for i in collection.find({}, {'_id': False}) ]
 	sites = json.dumps(sites, default=json_util.default)
 	return sites
+	
+@app.route("/ips")
+def get_ips():
+	COLLECTION_NAME = 'gmaps_ips'
+        collection = connection[DB_NAME][COLLECTION_NAME]
+        ips = [ i for i in collection.find({}, {'_id': False}) ]
+        ips = json.dumps(ips, default=json_util.default)
+        return ips 
 	
 @app.route("/test")
 def test():

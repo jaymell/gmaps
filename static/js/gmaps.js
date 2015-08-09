@@ -35,7 +35,13 @@ var Map = {
 		Map.map.setMapTypeId('myCustomMap');
 		// end part that removes equator and date lines here 
 
-		Map.addTopSites()
+                var xhReq = new XMLHttpRequest();
+		var url = '/ips';
+                xhReq.open("GET", url, false);
+                xhReq.send(null);
+                var json = JSON.parse(xhReq.responseText);
+
+		Map.slowAdd(json);
 		
 	},
 	addMarker: function(lat, lon, title) {
@@ -52,7 +58,7 @@ var Map = {
 		xhReq.open("GET", url, false);
 		xhReq.send(null);
 		var json = JSON.parse(xhReq.responseText);
-		console.log(json);
+
 		for( i = 0; i < json.length; i++ ) {
 			var site = json[i]['url'];
 			for ( ip in json[i]['ips'] ) {
@@ -64,18 +70,23 @@ var Map = {
 				}
 			}
 		}
+
 	},
-	slowAdd: function() {
-		var i = 0, j = 0;
-		function delay(i,j) {
-			(i<=20 && j<=20) ? Map.addMarker(i,j) : false;
-			setTimeout(function() { delay(i+1, j+1); }, 500);	
-		}
-		delay(i, j);
+
+	slowAdd: function(siteList) {
+		function delay(siteList) {
+			if ( siteList.length > 0 ) {	
+				console.log(siteList[0]);
+				Map.addMarker(siteList[0]['latitude'],
+						siteList[0]['longitude'],
+						siteList[0]['url']);
+				setTimeout(function() { delay(siteList.slice(1)); }, 100);
+			}
+		};
+		delay(siteList);
 	}
 };
 				
 
 detectBrowser();
 google.maps.event.addDomListener(window, 'load', Map.build);
-
