@@ -1,3 +1,6 @@
 #d3.js src:
 wget https://github.com/mbostock/d3/releases/download/v3.5.5/d3.zip
 
+# copy top_sites collection, or top_sites_new, to gmaps
+mongoexport -d top_sites -c top_sites_new | mongoimport -d top_sites -c gmaps --drop
+
