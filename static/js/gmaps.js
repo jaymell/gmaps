@@ -83,6 +83,12 @@ var Map = {
 	},
 
 	slowAdd: function(siteList) {
+		/* This function expects to be passed an array of IP
+			objects with the following attributes:
+			ip.longitude
+			ip.latitude
+			ip.url
+		*/
 		function delay(siteList) {
 			if ( siteList.length > 0 ) {	
 				console.log(siteList[0]);

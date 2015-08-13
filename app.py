@@ -5,6 +5,7 @@ from bson import json_util
 from bson.json_util import dumps
 import json
 import pycountry 
+import ConfigParser 
 
 app = Flask(__name__)
 
@@ -12,10 +13,14 @@ MONGODB_HOST = 'localhost'
 MONGODB_PORT = 27017
 DB_NAME = 'top_sites'
 connection = MongoClient(MONGODB_HOST, MONGODB_PORT)
+config = 'gmaps.key'
 
 @app.route("/")
 def index():
-	return render_template("index.html")
+	parser = ConfigParser.SafeConfigParser()
+        parser.read(config)
+	KEY=parser.get('KEYS', 'KEY')
+	return render_template("index.html", KEY=KEY)
 
 @app.route("/json")
 def get_json():
